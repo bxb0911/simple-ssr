@@ -30,19 +30,19 @@ if (isProd) {
 // express.static 处理的是物理磁盘中的资源文件
 server.use("/dist", express.static("./dist"));
 
-const render = (req, res) => {
-  renderer.renderToString(
-    {
+const render = async (req, res) => {
+  try {
+    const html = await renderer.renderToString({
       title: "哈哈哈",
       meta: `<meta name="description" content="茂茂">`,
-    },
-    (err, html) => {
-      if (err) {
-        return res.status(500).end("Internal Server Error.");
-      }
-      res.end(html);
-    }
-  );
+      url: req.url,
+    });
+    res.setHeader("Content-Type", "text/html; charset=utf8");
+    res.end(html);
+  } catch (err) {
+    console.log(err);
+    res.status(500).end("Internal Server Error.");
+  }
 };
 
 server.get(

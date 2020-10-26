@@ -18,8 +18,13 @@ export const createRouter = () => {
         component: () => import("@/pages/About"),
       },
       {
+        path: "/posts",
+        name: "posts",
+        component: () => import("@/pages/Posts"),
+      },
+      {
         path: "*",
-        name: "error40",
+        name: "error404",
         component: () => import("@/pages/404"),
       },
     ],
